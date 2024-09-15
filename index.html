@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker</title>
+
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        input[type="text"],
+        select,
+        input[type=number],
+        input[type=submit] {
+            margin-bottom: 10px;
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type=submit] {
+            background-color: #4caf5d;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        input[type=submit]:hover {
+            background-color: #45a049;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4caf50;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Expense Tracker</h2>
+        <form id="expenseform">
+            <input type="text" name="Description" id="Description" placeholder="Expense Description" required>
+            <br>
+            <select name="Category" id="Category">
+                <option value="Transportation">Transportation</option>
+                <option value="Food">Food</option>
+                <option value="Education">Education</option>
+                <option value="Enjoyment">Enjoyment</option>
+                <option value="Utility">Utility</option>
+                <option value="Others">Others</option>
+            </select>
+            <br>
+            <input type="number" name="amount" id="amount" placeholder="Amount" required>
+            <br>
+            <input type="submit" value="Add Expense">
+        </form>
+        <h3>Expense Summary</h3>
+        <table id="expenseTable">
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Category</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody id="expenseList">
+
+            </tbody>
+
+        </table>
+
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const expenseform = document.getElementById('expenseform');
+            const expenseList = document.getElementById('expenseList');
+
+            if (expenseform && expenseList) { // Check if form and list exist
+                expenseform.addEventListener('submit', function(event) {
+                    event.preventDefault();
+
+                    const Description = document.getElementById('Description').value;
+                    const Category = document.getElementById('Category').value;
+                    const amount = parseFloat(document.getElementById('amount').value);
+
+                    if (Description && Category && !isNaN(amount)) { // Data validation
+                        const newRow = document.createElement('tr');
+                        newRow.innerHTML = `<td>${Description}</td><td>${Category}</td><td>${amount}</td>`;
+                        expenseList.appendChild(newRow);
+                    } else {
+                        alert('Invalid input!');
+                    }
+                    document.getElementById('Description').value='';
+                    document.getElementById('Category').value='';
+                    document.getElementById('amount').value='';
+                });
+            } else {
+                console.log('Form or list element not found!');
+            }
+        });
+    </script>
+</body>
+</html>
